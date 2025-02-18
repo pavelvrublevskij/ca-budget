@@ -6,15 +6,14 @@ import java.util.List;
 
 public class BudgetManager {
 	private final BudgetService budgetService = new BudgetService();
+	private final BudgetDataIncomeResolver budgetDataIncomeResolver = new BudgetDataIncomeResolver(budgetService);
 
 	public void run() {
 		System.out.println("Hello My Budget! This is Demo Version!");
-		final IncomeRecord incomeRecord = new IncomeRecord(
-				BigDecimal.valueOf(1500), "Salary", LocalDateTime.now(), true, null);
+
+		budgetDataIncomeResolver.resolve();
 		final ExpenseRecord expenseRecord = new ExpenseRecord(
 				BigDecimal.valueOf(100), "Food", LocalDateTime.now(), PaymentMethodType.CARD, new BankCard("Revolut", "1234"));
-
-		budgetService.setIncomeRecord(incomeRecord);
 		budgetService.setExpenseRecords(expenseRecord);
 
 		printIncomeRecords();
